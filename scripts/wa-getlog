@@ -1,0 +1,6 @@
+#!/bin/bash
+set -eu
+
+cat > game.WAgame
+xvfb-run wine 'C:\WA\WA.exe' /quiet /getlog "$(winepath -w "$PWD"/game.WAgame)" 1>&2
+cat game.log

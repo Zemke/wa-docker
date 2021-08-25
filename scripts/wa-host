@@ -1,0 +1,4 @@
+#!/bin/bash
+set -eu
+
+xvfb-run wine 'C:\WA\WA.exe' /quiet /host
