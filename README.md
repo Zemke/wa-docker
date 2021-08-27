@@ -43,6 +43,14 @@ publicly available. I assume I'm going to migrate to this in the future.
 
 ## Usage
 
+Build the Docker image:
+
+```console
+docker build . -t wa
+```
+
+Extract the log using the previously built image:
+
 ```console
 docker run --rm -i wa wa-getlog < game.WAgame > game.log
 ```
