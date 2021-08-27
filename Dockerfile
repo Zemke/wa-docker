@@ -1,14 +1,5 @@
 FROM ubuntu:18.04 AS builder
 
-# This is the Dockerfile just for a headless Worms Armageddon installation
-# and convenience scripts for WA CLI options.
-# You need to provide the wa.iso and wa_3_8_gog_update.exe yourself.
-# The update doesn't necessarily need to be from GOG, but it allows for
-# running WA without a CD. On the other hand, if you have the ISO, you
-# have the CD, you'd just need a layer to mount the CD when running WA.
-# Maybe that's going to be done in the future as it would be easier to
-# apply newer updates which are in contrast to GOG publicly available.
-
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
 	ca-certificates \
