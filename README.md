@@ -39,7 +39,7 @@ This is utilized by WAaaS. Go there for detailed information how this is put int
 <sup>1</sup> On the other hand, if you have the ISO, you have the CD, you'd just need
 an additional layer to mount the CD when running WA. Maybe that's going to be done in
 the future as it would be easier to apply newer updates which are in contrast to GOG
-publicly available. I assume I'm going to migrate to this in the future.
+publicly available. I assume I'm going to migrate to this in the future. <sup>2</sup>
 
 ## Usage
 
@@ -61,4 +61,8 @@ Again, head over to WAaaS to see how it's also possible to extract the map for i
 
 > I will not provide the ready-made image because you're supposed to have acquired a 
 legal copy of this game. That's also why you have to provide the ISO file yourself.
+
+<sup>2</sup> When requiring the CD to me mounted, then I could also provide the ready-built
+image as a download which could then be made to only run when a volume containing the ISO
+is mounted to the Docker container.
 
