@@ -8,7 +8,6 @@ RUN apt-get update \
   unshield
 
 COPY wa.iso .
-#RUN wget https://archive.org/download/worms_armageddon_201905/worms_armageddon.iso
 
 # CD contents
 RUN mkdir -p wa/cd \
@@ -31,7 +30,6 @@ RUN wget -nc https://dl.winehq.org/wine-builds/winehq.key -O /tmp/winehq.key
 
 # Update
 COPY wa_3_8_gog_update.exe wa/game
-#RUN wget https://worms2d.info/files/WA_update-3.8_[GOG]_Installer.exe
 
 RUN cd wa/game \
   && 7z x -aoa wa_3_8_gog_update.exe \
@@ -75,5 +73,4 @@ RUN wine reg add 'HKEY_CURRENT_USER\Software\Team17SoftwareLTD\WormsArmageddon\O
 
 # Add scripts
 COPY scripts/* /usr/local/bin/
-
 
