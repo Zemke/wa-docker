@@ -28,12 +28,18 @@ RUN mv wa/cab/Program_Executable_Files wa/game \
 
 RUN wget -nc https://dl.winehq.org/wine-builds/winehq.key -O /tmp/winehq.key
 
-# Update
+# Updates
 COPY wa_3_8_gog_update.exe wa/game
+COPY wa_3_8_1_cd_update.exe wa/game
 
+# Installing the updates
 RUN cd wa/game \
   && 7z x -aoa wa_3_8_gog_update.exe \
-  && rm -rf \$PLUGINSDIR
+  && rm -rf \$PLUGINSDIR \
+  && 7z x -aoa wa_3_8_1_cd_update.exe \
+  && rm -rf \$PLUGINSDIR \
+  && bash -c "printf '\x02' | dd of='WA.exe' bs=1 seek=2717442 count=1 conv=notrunc" \
+  && bash -c "printf '\xF2' | dd of='WA.exe' bs=1 seek=360 count=1 conv=notrunc"
 
 # Remove files unnecessary for non-interactive (headless) use
 # RUN cd wa/game \
