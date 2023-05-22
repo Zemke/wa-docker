@@ -53,7 +53,7 @@ COPY --from=builder /tmp/winehq.key /tmp/winehq.key
 RUN apt-get update \
   && apt-get install -y software-properties-common gnupg \
   && apt-key add /tmp/winehq.key \
-  && add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main' \
+  && add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' \
   && rm /tmp/winehq.key
 
 # AMD 32-bit deps for Wine
