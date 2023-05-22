@@ -1,4 +1,4 @@
-FROM ubuntu:18.04 AS builder
+FROM ubuntu:20.04 AS builder
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -29,13 +29,10 @@ RUN mv wa/cab/Program_Executable_Files wa/game \
 RUN wget -nc https://dl.winehq.org/wine-builds/winehq.key -O /tmp/winehq.key
 
 # Updates
-COPY wa_3_8_gog_update.exe wa/game
 COPY wa_3_8_1_cd_update.exe wa/game
 
 # Installing the updates
 RUN cd wa/game \
-  && 7z x -aoa wa_3_8_gog_update.exe \
-  && rm -rf \$PLUGINSDIR \
   && 7z x -aoa wa_3_8_1_cd_update.exe \
   && rm -rf \$PLUGINSDIR \
   && bash -c "printf '\x02' | dd of='WA.exe' bs=1 seek=2717442 count=1 conv=notrunc" \
@@ -47,7 +44,7 @@ RUN cd wa/game \
 #     -printf 'Deleting %p\n' -delete
 
 
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 # Get key to Wine repo
 COPY --from=builder /tmp/winehq.key /tmp/winehq.key
@@ -56,12 +53,11 @@ COPY --from=builder /tmp/winehq.key /tmp/winehq.key
 RUN apt-get update \
   && apt-get install -y software-properties-common gnupg \
   && apt-key add /tmp/winehq.key \
-  && add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main' \
+  && add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' \
   && rm /tmp/winehq.key
 
 # AMD 32-bit deps for Wine
 RUN dpkg --add-architecture i386 \
-  && add-apt-repository ppa:cybermax-dexter/sdl2-backport \
   && apt-get update \
   && apt-get install -y --install-recommends winehq-stable wine32 xvfb \
   && rm -rf /var/lib/apt/lists/*
@@ -73,8 +69,9 @@ RUN WINEDLLOVERRIDES="mscoree,mshtml=" xvfb-run wineboot -i \
 # Copy game installation directory
 COPY --from=builder wa/game /root/.wine/drive_c/WA
 
-# Suppress Wine compatibility warning (only needed for 3.8 and earlier)
+# Suppress Wine compatibility warning (only needed for 3.8 and earlier) and enabled windowed mode
 RUN wine reg add 'HKEY_CURRENT_USER\Software\Team17SoftwareLTD\WormsArmageddon\Options' /v WineCompatibilitySuggested /t REG_DWORD /d 0x7FFFFFFF \
+  && wine reg add 'HKEY_CURRENT_USER\Software\Team17SoftwareLTD\WormsArmageddon\Options' /v WindowedMode /t REG_DWORD /d 0x00000001 \
   && wineserver -k
 
 # Add scripts
