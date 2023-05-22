@@ -1,0 +1,10 @@
+#!/bin/bash
+set -eu
+
+Xvfb :1 &
+PIDX=$!
+trap "kill $PIDX" EXIT
+export DISPLAY=:1
+cat > /tmp/game.WAgame
+wine 'C:\WA\WA.exe' /getvideo "$(winepath -w /tmp/game.WAgame)" $1 $2 $3 $4 $5
+
