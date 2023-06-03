@@ -55,6 +55,12 @@ Extract the log using the previously built image:
 docker run --rm -i wa wa-getlog < game.WAgame > game.log
 ```
 
+Export first 5 seconds of video replay frames at 20 frames per second 640 by 480 picels.:
+
+```console
+docker run -i --rm -v $PWD/game:/root/.wine/drive_c/WA/User/Capture/game wa wa-getvideo 20 0 5 640 480 < game.WAgame
+```
+
 Again, head over to WAaaS to see how it's also possible to extract the map for instance.
 
 ---
